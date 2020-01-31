@@ -473,7 +473,7 @@ const getChromeProps = (isHeaded, project, writeVideoFrame) => {
   .chain({})
   .tap((props) => {
     if (writeVideoFrame) {
-      props.screencastFrame = (e) => {
+      props.onScreencastFrame = (e) => {
         // https://chromedevtools.github.io/devtools-protocol/tot/Page#event-screencastFrame
         writeVideoFrame(Buffer.from(e.data, 'base64'))
       }
