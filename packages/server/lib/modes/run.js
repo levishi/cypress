@@ -534,7 +534,14 @@ const writeOutput = (outputPath, results) => {
   })
 }
 
+const warnings = {}
 const onWarning = (err) => {
+  // if we've printed this exact warning before, skip it
+  if (err.type && warnings[err.type] && warnings[err.type].message === err.message) {
+    return
+  }
+
+  warnings[err.type] = err
   console.log(chalk.yellow(err.message))
 }
 
@@ -916,6 +923,8 @@ module.exports = {
     }
 
     browserOpts.projectRoot = projectRoot
+
+    browserOpts.onWarning = project.onWarning
 
     return openProject.launch(browser, spec, browserOpts)
   },
